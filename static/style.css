@@ -1,0 +1,77 @@
+:root{
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --muted: #6c757d;
+  --primary: #0d6efd;
+  --accent: #00b4ff;
+  --glass: rgba(13, 110, 253, 0.06);
+  --radius: 12px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background: linear-gradient(180deg, var(--bg), #f1f4f8 60%);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  color:#222;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.site-header{background:transparent}
+.brand{color:var(--primary); font-weight:700; text-decoration:none}
+.brand svg{flex-shrink:0}
+.nav-link{color:var(--muted); text-decoration:none}
+.nav-link:hover{color:var(--primary)}
+
+.hero h1{font-weight:700; margin-bottom:0.25rem}
+.hero p{margin-bottom:0}
+
+.card{border-radius:var(--radius)}
+.card.shadow-sm{box-shadow:0 6px 18px rgba(16,24,40,0.06)}
+
+/* Form styles */
+input.form-control, textarea.form-control{
+  border-radius:10px;
+  border:1px solid #e6e9ef;
+  padding:.75rem .9rem;
+  transition:box-shadow .15s ease, border-color .15s ease, transform .05s ease;
+}
+input.form-control:focus, textarea.form-control:focus{
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 6px 18px rgba(13,110,253,0.08);
+  transform: translateY(-1px);
+}
+
+.btn-primary{
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border: none;
+  box-shadow: 0 8px 20px rgba(13,110,253,0.12);
+  border-radius: 10px;
+  padding: .68rem 1.25rem;
+  font-weight:600;
+}
+.btn-primary:hover{filter:brightness(.98); transform:translateY(-1px)}
+
+.map iframe{border-radius:10px}
+
+.site-footer{background:transparent}
+.site-footer a{color:var(--muted)}
+
+/* Flash message tweaks */
+.alert{border-radius:10px}
+
+/* Small screens adjustments */
+@media (max-width: 767px){
+  .site-header .nav-link, .site-header .btn{display:none}
+  .brand + .ms-2{font-size:1rem}
+  .hero h1{font-size:1.5rem}
+}
+
+/* Utility */
+.text-muted{color:var(--muted) !important}
+
+/* Accessibility: focus ring visible for keyboard users */
+a:focus, button:focus, input:focus, textarea:focus{outline-offset:2px}
+

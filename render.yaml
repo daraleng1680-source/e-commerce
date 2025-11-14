@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: store
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
+    envVars:
+      - key: FLASK_SECRET
+        scope: all
+        generateValue: true
+      - key: BOT_TOKEN
+        scope: all
+        value: "your_telegram_bot_token_here"
+      - key: CHAT_ID
+        scope: all
+        value: "@your_chat_id_here"
+      - key: PYTHON_VERSION
+        value: "3.11"

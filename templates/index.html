@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Shop — Store{% endblock %}
+{% block content %}
+  <div class="row">
+    <div class="col-12 mb-3">
+      <h2 class="mb-0">Shop</h2>
+      <p class="text-muted">Browse our featured products.</p>
+    </div>
+  </div>
+
+  <div class="row g-2">
+    {% for p in products %}
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card h-100 shadow-sm" style="border:none;">
+          <img src="{{ p.image }}" class="card-img-top" alt="{{ p.name }}" style="height:250px; object-fit:cover;">
+          <div class="card-body p-2">
+            <h6 class="card-title mb-1" style="font-size:0.95rem;">{{ p.name }}</h6>
+            <p class="card-text text-muted flex-grow-1 mb-2" style="font-size:0.8rem;">{{ p.description }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div style="font-weight:bold; font-size:1rem;">${{ '%.2f'|format(p.price) }}</div>
+              <div class="gap-1" style="display:flex; gap:0.25rem;">
+                <a href="{{ url_for('product_detail', product_id=p.id) }}" class="btn btn-sm btn-outline-primary" style="padding:0.25rem 0.5rem; font-size:0.75rem;">View</a>
+                <form action="{{ url_for('add_to_cart') }}" method="post" style="display:inline;">
+                  <input type="hidden" name="product_id" value="{{ p.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button class="btn btn-sm btn-primary" style="padding:0.25rem 0.5rem; font-size:0.75rem;">Add</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
