@@ -1,9 +1,16 @@
 from flask import Flask, render_template, request, redirect, flash, session, url_for
 import requests, os
+from datetime import timedelta
 
 app = Flask(__name__)
 # Prefer a secret from environment; fallback to a development key
 app.secret_key = os.environ.get("FLASK_SECRET", "supersecretkey")  # Needed for flash messages and session
+
+# Session security configuration
+app.config['SESSION_COOKIE_SECURE'] = True  # HTTPS only (auto in production)
+app.config['SESSION_COOKIE_HTTPONLY'] = True  # No JavaScript access
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # CSRF protection
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 
 # Telegram config (recommend setting via environment variables in production)
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "8031877894:AAFqRcUIatER722OAsmYOjUjMfb1xuUmGWs")
@@ -176,6 +183,25 @@ def send():
         print(e)
 
     return redirect(url_for("contact"))
+
+
+# Error handlers
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404.html"), 404
+
+
+@app.errorhandler(500)
+def server_error(e):
+    return render_template("500.html"), 500
+
+
+# Security headers
+@app.after_request
+def set_security_headers(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    return response
 
 
 if __name__ == "__main__":
